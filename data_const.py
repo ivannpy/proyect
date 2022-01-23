@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 cur_path = os.getcwd()
 
@@ -24,7 +25,7 @@ cardinality = {'client': 10000,
                'partner': 200,
                'vehicle': 500,
                'travel': 25000,
-               'infraction': 500,
+               'infraction': 100,
                'board': 25000,
                'schedule': 5000
                }
@@ -133,3 +134,27 @@ ins_mail = {'Instituto de Ciencias Nucleares': 'nucleares',
             }
 
 ins_names = list(ins_mail.keys())
+
+
+marca_modelo = {'CHEVROLET': {'modelos': ['Aveo', 'Onix', 'Captiva'],
+                               'años': np.arange(2010, 2021)},
+                 'FORD': {'modelos': ['Figo', 'Fiesta', 'Sedán'],
+                          'años': np.arange(2010, 2019)},
+                 'NISSAN': {'modelos': ['Tsuru', 'Versa', 'Sentra'],
+                            'años': np.arange(2000, 2016)}
+                }
+
+
+data_vehicle = {'vehicles': marca_modelo,
+                'tipo': ['Cambio manual', 'Cambio automático'],
+                'num_cilindros': [4, 6],
+                'pasajeros': [3, 4],
+                'puertas': [4, 5],
+                'combustible': ['Motor gasolina', 'Motor diesel']
+                }
+
+aseguradoras_info = {'aseguradoras': ['AXA', 'BBVA', 'GNP', 'HDI', 'QUALITAS'],
+                    'tipos_seguros': ['Básica', 'Limitada', 'Amplia', 'Plus']
+                    }
+
+razones_baja = ['Accidente', 'Baja voluntaria', 'Suspensión', 'Reporte de robo', 'Vehículo robado']

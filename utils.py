@@ -1,11 +1,12 @@
 import numpy as np
+import pandas as pd
 import string
 import time
 import datetime
 import data_const as c
 
 
-def get_names(data_m, data_f, data_s, n_data, seed):
+def get_names(data_m, data_f, data_s, n_data, seed=1):
     np.random.seed(seed)
     n_masc = int(np.random.normal(loc=(n_data)/2, scale=1))
     n_fem = n_data - n_masc
@@ -290,6 +291,14 @@ def compare_date(date1, date2):
     return date1 >= date2
 
 
+def get_time():
+    hh = np.random.randint(6,23, size=1)[0]
+    mm = np.random.randint(0,59, size=1)[0]
+    ss = np.random.randint(0,59, size=1)[0]
+    timer = datetime.time(hh,mm,ss)
+
+    return timer
+
 
 def get_in_out(n_socio):
     ingreso: list = []
@@ -340,3 +349,166 @@ def get_lic(choferes):
             licencias.append(lic)
 
     return licencias
+
+def get_duenios(owners, n_veh):
+    duenios = []
+    poss_owners = list(owners.copy())
+
+    for i in range(0, n_veh):
+        owner = np.random.choice(poss_owners, size=1)[0]
+        duenios.append(owner)
+        poss_owners.remove(owner)
+
+        if len(poss_owners) == 0:
+            poss_owners = list(owners.copy())
+
+    return duenios
+
+def get_vehicle_info(n_vehicle):
+    marcas = list(c.data_vehicle['vehicles'].keys())
+    tipos = c.data_vehicle['tipo']
+    num_c = c.data_vehicle['num_cilindros']
+    pasajeros = c.data_vehicle['pasajeros']
+    puertas = c.data_vehicle['puertas']
+    combustibles = c.data_vehicle['combustible']
+
+    marcas_, modelos_, anios_ = [], [], []
+    tipos_, cils_, pasajeros_, = [], [], []
+    puertas_, combs_, refac_ = [], [], []
+
+    for n in range(n_vehicle):
+        marca = np.random.choice(marcas, size=1, p=[0.3, 0.2, 0.5])[0]
+
+        poss_mod = c.data_vehicle['vehicles'][marca]['modelos']
+        poss_an = c.data_vehicle['vehicles'][marca]['años']
+
+        modelo = np.random.choice(poss_mod, size=1, p=[0.6, 0.2, 0.2])[0]
+        anio = np.random.choice(poss_an, size=1)[0]
+        tipo = np.random.choice(tipos, size=1, p=[0.4, 0.6])[0]
+        n_cil = np.random.choice(num_c, size=1, p=[0.7, 0.3])[0]
+        max_pas = np.random.choice(pasajeros, size=1, p=[0.3, 0.7])[0]
+        n_puertas = np.random.choice(puertas, size=1, p=[0.4, 0.6])[0]
+        comb = np.random.choice(combustibles, size=1)[0]
+        ref = np.random.choice(['Sí', 'No'], size=1, p=[0.8,0.2])[0]
+
+        marcas_.append(marca)
+        modelos_.append(modelo)
+        anios_.append(anio)
+        tipos_.append(tipo)
+        cils_.append(n_cil)
+        pasajeros_.append(max_pas)
+        puertas_.append(n_puertas)
+        combs_.append(comb)
+        refac_.append(ref)
+
+    return marcas_, modelos_, anios_, tipos_, cils_, pasajeros_, puertas_, combs_, refac_
+
+
+def get_aseg_info(n_vehicle):
+    vigencias = []
+
+    aseg = c.aseguradoras_info['aseguradoras']
+    tipos = c.aseguradoras_info['tipos_seguros']
+
+
+    aseguradoras = np.random.choice(aseg, size=n_vehicle, p=[0.1, 0.5, 0.1, 0.1, 0.2])
+    tipos_seguros = np.random.choice(tipos, size=n_vehicle, p=[0.6, 0.20, 0.1, 0.1])
+
+    for n in range(n_vehicle):
+        vig = get_date(lower=2021, upper=2023)[0]
+        vigencias.append(vig)
+
+    return aseguradoras, tipos_seguros, vigencias
+
+
+def get_raz(n_vehicle):
+    activos = np.random.choice([True, False], size=n_vehicle, p=[0.9,0.1])
+    razones = []
+
+    for act in activos:
+        if act:
+            razones.append('No aplica')
+        else:
+            razon = np.random.choice(c.razones_baja, size=1, p=[0.2, 0.3, 0.2, 0.2, 0.1])[0]
+            razones.append(razon)
+
+    return activos, razones
+
+def get_dist_time(n_travel):
+    distances = []
+    times = []
+
+    for n in range(n_travel):
+        type = np.random.choice(['corto', 'largo'], size=1, p=[0.7, 0.3])[0]
+        if type == 'corto':
+            distance = abs(2 + np.random.normal(loc=0, scale=1))
+            time = abs(10 + np.random.normal(loc=0, scale=2))
+            distances.append(round(distance,2))
+            times.append(int(time))
+        else:
+            distance = abs(10 + np.random.normal(loc=0, scale=4))
+            time = abs(45 + np.random.normal(loc=0, scale=4))
+            distances.append(round(distance,2))
+            times.append(int(time))
+
+    return distances, times
+
+
+def get_infrac(travels, n_infrac):
+    ids_socios = []
+    num_ecos = []
+    fechas = []
+
+    data = travels[['id_socio', 'num_economico', 'fecha']]
+    infractores = np.random.choice(data['id_socio'].unique(), size=10)
+
+    for n in range(n_infrac):
+        infractor = np.random.choice(infractores, size=1)[0]
+        idx = data.index[data['id_socio'] == infractor].tolist()[0]
+        num_eco = data.iloc[idx]['num_economico']
+        fecha = data.iloc[idx]['fecha']
+
+        ids_socios.append(infractor)
+        num_ecos.append(num_eco)
+        fechas.append(fecha)
+
+        data.drop(index=idx, inplace=True)
+
+    return ids_socios, num_ecos, fechas
+
+
+def get_infrac_place(n_data):
+    places_ = {'cp': [66455],
+    'alcaldia': ['Coyoacán'],
+    'calle': ['Circuito escolar']}
+
+    # Direcciones
+    cdmx_data = pd.read_csv(c.filepath_raw + '/all_cdmx_data.csv')
+    np.random.seed(12345)
+    to_select = np.random.choice(np.arange(0, cdmx_data.index[-1]), size=100, replace=True)
+    cdmx_places = cdmx_data.iloc[to_select]
+    cdmx_places.astype({'cp': 'float32'})
+
+    for i in range(len(cdmx_places['cp'])):
+        places_['cp'].append(list(cdmx_places['cp'])[i])
+        places_['alcaldia'].append(list(cdmx_places['alcaldia'])[i])
+        places_['calle'].append(list(cdmx_places['calle_num'])[i])
+
+    mun = []
+    cp = []
+    calle = []
+
+    for i in range(n_data):
+        np.random.seed(None)
+        p = np.random.choice(['CU', 'CDMX'], size=1, p=[0.8, 0.2])[0]
+        if p == 'CU':
+            mun.append(places_['alcaldia'][0])
+            cp.append(places_['cp'][0])
+            calle.append(places_['calle'][0])
+        else:
+            j = np.random.randint(1,len(places_['cp']))
+            mun.append(places_['alcaldia'][j])
+            cp.append(places_['cp'][j])
+            calle.append(places_['calle'][j])
+
+    return mun, cp, calle
