@@ -512,3 +512,28 @@ def get_infrac_place(n_data):
             calle.append(places_['calle'][j])
 
     return mun, cp, calle
+
+
+def get_abordaje(curps, ids_viajes):
+    viajes_list = []
+    curps_list = []
+
+    curps_pool = curps.copy()
+    for id_viaje in ids_viajes:
+        n_viajeros = np.random.choice([1,2,3,4], size=1, p=[0.1, 0.4, 0.3, 0.2])[0]
+        if len(curps_pool) < n_viajeros:
+            curps_pool = curps.copy()
+        to_select = np.random.choice(list(curps_pool.index.values), size=n_viajeros, replace=False)
+        pasajeros = curps_pool.iloc[to_select]
+
+        for pasajero in pasajeros:
+            viajes_list.append(id_viaje)
+            curps_list.append(pasajero)
+
+        curps_pool.drop(to_select, inplace=True)
+        curps_pool = curps_pool.reset_index(drop=True)
+
+        if len(curps_pool) == 0:
+            curps_pool = curps.copy()
+
+    return curps_list, viajes_list

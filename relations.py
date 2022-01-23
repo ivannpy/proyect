@@ -86,8 +86,7 @@ dict_to_df_infraccion = {'id_infraccion': [],
 dict_to_df_abordar = {'curp': [],
                       'id_viaje': [],
                       'origen': [],
-                      'destino': [],
-                      'id_viajero': []
+                      'destino': []
                       }
 
 # Programar

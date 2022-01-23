@@ -26,7 +26,7 @@ cardinality = {'client': 10000,
                'vehicle': 500,
                'travel': 25000,
                'infraction': 100,
-               'board': 25000,
+               'board': 75000, # Se calcula on the fly
                'schedule': 5000
                }
 
