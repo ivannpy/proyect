@@ -3,6 +3,7 @@ import pandas as pd
 import string
 import time
 import datetime
+from collections import Counter
 import data_const as c
 
 
@@ -292,9 +293,9 @@ def compare_date(date1, date2):
 
 
 def get_time():
-    hh = np.random.randint(6,23, size=1)[0]
-    mm = np.random.randint(0,59, size=1)[0]
-    ss = np.random.randint(0,59, size=1)[0]
+    hh = np.random.randint(6, 23, size=1)[0]
+    mm = np.random.randint(0, 59, size=1)[0]
+    ss = np.random.randint(0, 59, size=1)[0]
     timer = datetime.time(hh,mm,ss)
 
     return timer
@@ -316,7 +317,7 @@ def get_in_out(n_socio):
 
             egreso.append(exit[0])
         else:
-            egreso.append('No aplica')
+            egreso.append(np.nan)
 
     return ingreso, egreso
 
@@ -389,7 +390,7 @@ def get_vehicle_info(n_vehicle):
         max_pas = np.random.choice(pasajeros, size=1, p=[0.3, 0.7])[0]
         n_puertas = np.random.choice(puertas, size=1, p=[0.4, 0.6])[0]
         comb = np.random.choice(combustibles, size=1)[0]
-        ref = np.random.choice(['Sí', 'No'], size=1, p=[0.8,0.2])[0]
+        ref = np.random.choice([True, False], size=1, p=[0.8,0.2])[0]
 
         marcas_.append(marca)
         modelos_.append(modelo)
@@ -537,3 +538,154 @@ def get_abordaje(curps, ids_viajes):
             curps_pool = curps.copy()
 
     return curps_list, viajes_list
+
+
+
+def get_origen_destino(abordar, cliente):
+    origenes = []
+    destinos = []
+
+    ids_viajes = list(abordar['id_viaje'].unique())
+
+    for id_viaje in ids_viajes:
+        curps = list(abordar.loc[abordar['id_viaje'] == id_viaje]['curp'])
+        p = np.random.choice([0,1], size=1, p=[0.6,0.4])[0]
+
+        if p == 0: # de casas a CU
+            for curp in curps:
+                origen = cliente.loc[cliente['curp'] == curp]['calle_num'].values[0]
+                origenes.append(origen)
+
+                destino_1 = cliente.loc[cliente['curp'] == curp]['facultad'].values[0]
+                destino_2 = cliente.loc[cliente['curp'] == curp]['instituto'].values[0]
+                destino_3 = cliente.loc[cliente['curp'] == curp]['unidad'].values[0]
+                for i in [destino_1, destino_2, destino_3]:
+                    if i != 'No aplica':
+                        destinos.append(i)
+                        break
+        else: # De CU a sus casas
+            for curp in curps:
+                origen_1 = cliente.loc[cliente['curp'] == curp]['facultad'].values[0]
+                origen_2 = cliente.loc[cliente['curp'] == curp]['instituto'].values[0]
+                origen_3 = cliente.loc[cliente['curp'] == curp]['unidad'].values[0]
+                for i in [origen_1, origen_2, origen_3]:
+                    if i != 'No aplica':
+                        origenes.append(i)
+                        break
+
+                destino = cliente.loc[cliente['curp'] == curp]['calle_num'].values[0]
+                destinos.append(destino)
+
+    return origenes, destinos
+
+
+
+def add_redondos(board, travel, client, partner, vehicle):
+    # Par Programar
+    curps_programar = []
+    ids_viajes_programar = []
+    h_entradas = []
+    h_salidas = []
+    redondos = []
+    # Para Viaje
+    ids_viajes_viaje = []
+    ids_socios = []
+    nums_ecos = []
+    distancias = []
+    tiempos = []
+    fechas = []
+    # Para Abordar
+    curps_abordar = []
+    ids_viajes_abordar = []
+    origenes = []
+    destinos = []
+
+    # Clientes que van a programar viajes
+    curps_to_sche = np.random.choice(client['curp'].unique().tolist(), size=50)
+    last_travel = int(list(travel['id_viaje'])[-1].split('-')[1])
+
+    for curp in curps_to_sche:
+        n_to_sch = np.random.randint(1, 50, size=1)[0]
+
+        hh_e = np.random.choice([7,8], size=1, p=[0.6,0.4])[0]
+        hh_s = np.random.choice([13,14,15], size=1, p=[0.2,0.4,0.4])[0]
+        h_entrada = datetime.time(hour=hh_e)
+        h_salida = datetime.time(hour=hh_s)
+
+        for n in range(n_to_sch):
+            # Programar ida
+            last_travel += 1
+            id_viaje_ida = 'v-'+f'{last_travel}'.zfill(6)
+            redondo = np.random.choice([True, False], size=1, p=[0.6,0.4])[0]
+
+            curps_programar.append(curp)
+            ids_viajes_programar.append(id_viaje_ida)
+            h_entradas.append(h_entrada)
+            h_salidas.append(np.nan)
+
+            redondos.append(redondo)
+
+            # Viaje de Ida
+            id_socio = np.random.choice(list(partner['id_socio']), size=1)[0]
+            num_eco = np.random.choice(list(vehicle['num_economico']), size=1)[0]
+            distancia = abs(2 + np.random.normal(loc=0, scale=1))
+            tiempo = abs(10 + np.random.normal(loc=0, scale=2))
+            fecha = get_date(lower=2021)[0]
+
+            ids_viajes_viaje.append(id_viaje_ida)
+            ids_socios.append(id_socio)
+            nums_ecos.append(num_eco)
+            distancias.append(distancia)
+            tiempos.append(tiempo)
+            fechas.append(fecha)
+
+            # Abordaje de ida
+            origen = client.loc[client['curp'] == curp]['calle_num'].values[0]
+            destino_1 = client.loc[client['curp'] == curp]['facultad'].values[0]
+            destino_2 = client.loc[client['curp'] == curp]['instituto'].values[0]
+            destino_3 = client.loc[client['curp'] == curp]['unidad'].values[0]
+            for i in [destino_1, destino_2, destino_3]:
+                if i != 'No aplica':
+                    destino = i
+                    break
+
+            curps_abordar.append(curp)
+            ids_viajes_abordar.append(id_viaje_ida)
+            origenes.append(origen)
+            destinos.append(destino)
+
+            if redondo:
+                last_travel += 1
+                id_viaje_regreso = 'v-'+f'{last_travel}'.zfill(6)
+
+                # Programar regreso
+                curps_programar.append(curp)
+                ids_viajes_programar.append(id_viaje_regreso)
+                h_entradas.append(np.nan)
+                h_salidas.append(h_salida)
+                redondos.append(redondo)
+
+                # Viaje de regreso
+                id_socio = np.random.choice(list(partner['id_socio']), size=1)[0]
+                num_eco = np.random.choice(list(vehicle['num_economico']), size=1)[0]
+                distancia += np.random.normal(0, 0.01)
+                tiempo += np.random.normal(0, 0.1)
+
+                ids_viajes_viaje.append(id_viaje_regreso)
+                ids_socios.append(id_socio)
+                nums_ecos.append(num_eco)
+                distancias.append(distancia)
+                tiempos.append(tiempo)
+                fechas.append(fecha)
+
+                # Abordaje de regreso
+                curps_abordar.append(curp)
+                ids_viajes_abordar.append(id_viaje_regreso)
+                origenes.append(destino)
+                destinos.append(origen)
+
+    programar_ = [curps_programar, ids_viajes_programar, h_entradas, h_salidas, redondos]
+    viaje_ = [ids_viajes_viaje, ids_socios, nums_ecos, distancias, tiempos, fechas]
+    abordar_ = [curps_programar, ids_viajes_programar, origenes, destinos]
+
+    return programar_, viaje_, abordar_
