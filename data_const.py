@@ -5,6 +5,7 @@ cur_path = os.getcwd()
 
 filepath_raw = os.path.join(cur_path, 'data', 'raw_data')
 filepath_datasets = os.path.join(cur_path, 'data', 'datasets')
+filepath_sql = os.path.join(cur_path, 'sql_files')
 
 # Filepaths de los csv para poblar
 filepath_client = os.path.join(filepath_datasets, 'client.csv')
@@ -27,7 +28,7 @@ cardinality = {'client': 10000,
                'travel': 25000,
                'infraction': 100,
                'board': 75000, # Se calcula on the fly
-               'schedule': 5000
+               'schedule': 5000 # Se calcula on the fly
                }
 
 # Datos para rellenar

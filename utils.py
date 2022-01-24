@@ -607,8 +607,8 @@ def add_redondos(board, travel, client, partner, vehicle):
     for curp in curps_to_sche:
         n_to_sch = np.random.randint(1, 50, size=1)[0]
 
-        hh_e = np.random.choice([7,8], size=1, p=[0.6,0.4])[0]
-        hh_s = np.random.choice([13,14,15], size=1, p=[0.2,0.4,0.4])[0]
+        hh_e = np.random.choice([7, 8], size=1, p=[0.6, 0.4])[0]
+        hh_s = np.random.choice([13, 14, 15], size=1, p=[0.2, 0.4, 0.4])[0]
         h_entrada = datetime.time(hour=hh_e)
         h_salida = datetime.time(hour=hh_s)
 
@@ -616,7 +616,7 @@ def add_redondos(board, travel, client, partner, vehicle):
             # Programar ida
             last_travel += 1
             id_viaje_ida = 'v-'+f'{last_travel}'.zfill(6)
-            redondo = np.random.choice([True, False], size=1, p=[0.6,0.4])[0]
+            redondo = np.random.choice([True, False], size=1, p=[0.6, 0.4])[0]
 
             curps_programar.append(curp)
             ids_viajes_programar.append(id_viaje_ida)
@@ -636,7 +636,7 @@ def add_redondos(board, travel, client, partner, vehicle):
             ids_socios.append(id_socio)
             nums_ecos.append(num_eco)
             distancias.append(round(distancia, 2))
-            tiempos.append(round(tiempo, 2))
+            tiempos.append(int(tiempo))
             fechas.append(fecha)
 
             # Abordaje de ida
@@ -656,7 +656,7 @@ def add_redondos(board, travel, client, partner, vehicle):
 
             if redondo:
                 last_travel += 1
-                id_viaje_regreso = 'v-'+f'{last_travel}'.zfill(6)
+                id_viaje_regreso = 'v-' + f'{last_travel}'.zfill(6)
 
                 # Programar regreso
                 curps_programar.append(curp)
@@ -675,7 +675,7 @@ def add_redondos(board, travel, client, partner, vehicle):
                 ids_socios.append(id_socio)
                 nums_ecos.append(num_eco)
                 distancias.append(round(distancia, 2))
-                tiempos.append(round(tiempo, 2))
+                tiempos.append(int(tiempo))
                 fechas.append(fecha)
 
                 # Abordaje de regreso

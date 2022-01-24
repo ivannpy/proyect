@@ -89,7 +89,7 @@ dict_to_df_abordar = {'curp': [],
                       'destino': []
                       }
 
-# Programar
+# Programar - Abordar - Travel
 dict_to_df_programar = {'curp': [],
                         'id_viaje': [],
                         'h_entrada': [],
