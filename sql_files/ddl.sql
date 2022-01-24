@@ -100,7 +100,7 @@ comment on column cliente.es_academico is 'Nos dice si es academico';
 comment on column cliente.es_trabajador is 'Nos dice si es trabajador';
 
 alter table cliente
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists socio
 (
@@ -197,7 +197,7 @@ comment on column socio.es_duenio is 'Nos dice si es duenio';
 comment on column socio.es_chofer is 'Nos dice si es chofer';
 
 alter table socio
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists vehiculo
 (
@@ -278,7 +278,7 @@ comment on column vehiculo.activo is 'Nos dice si el vehiculo esta activo o no';
 comment on column vehiculo.razon is 'Razon por la que el vehiculo no esta activo';
 
 alter table vehiculo
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists viaje
 (
@@ -317,7 +317,7 @@ comment on column viaje.tiempo is 'Tiempo de duracion del viaje hecho por el tax
 comment on column viaje.fecha is 'Fecha en la que se realizo el viaje hecho por el taxi de la asociacion "El Pumita"';
 
 alter table viaje
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists infraccion
 (
@@ -376,7 +376,7 @@ comment on column infraccion.cp is 'Codigo postal del lugar donde se cometio la 
 comment on column infraccion.calle is 'Calle donde se cometio la infraccion';
 
 alter table infraccion
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists programar
 (
@@ -410,7 +410,7 @@ comment on column programar.h_salida is 'La hora de salida de los clientes';
 comment on column programar.redondo is 'Nos dice si el viaje sera de ida y vuelta';
 
 alter table programar
-    owner to ivanreyes;
+    owner to postgres;
 
 create table if not exists abordar
 (
@@ -443,6 +443,6 @@ comment on column abordar.origen is 'Lugar de origen del viaje';
 comment on column abordar.destino is 'Lugar de destino del viaje';
 
 alter table abordar
-    owner to ivanreyes;
+    owner to postgres;
 
 
