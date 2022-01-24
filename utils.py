@@ -635,8 +635,8 @@ def add_redondos(board, travel, client, partner, vehicle):
             ids_viajes_viaje.append(id_viaje_ida)
             ids_socios.append(id_socio)
             nums_ecos.append(num_eco)
-            distancias.append(distancia)
-            tiempos.append(tiempo)
+            distancias.append(round(distancia, 2))
+            tiempos.append(round(tiempo, 2))
             fechas.append(fecha)
 
             # Abordaje de ida
@@ -674,8 +674,8 @@ def add_redondos(board, travel, client, partner, vehicle):
                 ids_viajes_viaje.append(id_viaje_regreso)
                 ids_socios.append(id_socio)
                 nums_ecos.append(num_eco)
-                distancias.append(distancia)
-                tiempos.append(tiempo)
+                distancias.append(round(distancia, 2))
+                tiempos.append(round(tiempo, 2))
                 fechas.append(fecha)
 
                 # Abordaje de regreso
