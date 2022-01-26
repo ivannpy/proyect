@@ -3,8 +3,6 @@ create table if not exists cliente
     curp          char(18)     not null
         constraint cliente_pkey
             primary key
-        constraint cliente_curp_key
-            unique
         constraint cliente_curp_check
             check (char_length(curp) = 18),
     nombre        varchar(100)
@@ -107,8 +105,6 @@ create table if not exists socio
     id_socio     varchar(100) not null
         constraint socio_pkey
             primary key
-        constraint socio_id_socio_key
-            unique
         constraint socio_id_socio_check
             check ((id_socio)::text <> ''::text),
     nombre       varchar(100)
@@ -204,13 +200,12 @@ create table if not exists vehiculo
     num_economico   varchar(100) not null
         constraint vehiculo_pkey
             primary key
-        constraint vehiculo_num_economico_key
-            unique
         constraint vehiculo_num_economico_check
             check ((num_economico)::text <> ''::text),
     id_socio        varchar(100) not null
         constraint vehiculo_fkey
             references socio
+            on update cascade on delete cascade
         constraint vehiculo_id_socio_check
             check ((id_socio)::text <> ''::text),
     anio            integer      not null,
@@ -284,17 +279,17 @@ create table if not exists viaje
 (
     id_viaje      varchar(100) not null
         constraint viaje_pkey
-            primary key
-        constraint viaje_id_viaje_key
-            unique,
+            primary key,
     id_socio      varchar(100) not null
         constraint viaje_fkey1
             references socio
+            on update cascade on delete cascade
         constraint viaje_id_socio_check
             check ((id_socio)::text <> ''::text),
     num_economico varchar(100) not null
         constraint viaje_fkey2
             references vehiculo
+            on update cascade on delete cascade
         constraint viaje_num_economico_check
             check ((num_economico)::text <> ''::text),
     distancia     real         not null,
@@ -329,11 +324,13 @@ create table if not exists infraccion
     id_socio      varchar(100) not null
         constraint infraccion_fkey1
             references socio
+            on update cascade on delete cascade
         constraint infraccion_id_socio_check
             check ((id_socio)::text <> ''::text),
     num_economico varchar(100) not null
         constraint infraccion_fkey2
             references vehiculo
+            on update cascade on delete cascade
         constraint infraccion_num_economico_check
             check ((num_economico)::text <> ''::text),
     monto_pagar   money,
@@ -383,6 +380,7 @@ create table if not exists programar
     curp      char(18)     not null
         constraint programar_fkey1
             references cliente
+            on update cascade on delete cascade
         constraint programar_curp_check
             check (char_length(curp) = 18),
     id_viaje  varchar(100) not null
@@ -390,6 +388,7 @@ create table if not exists programar
             unique
         constraint programar_fkey2
             references viaje
+            on update cascade on delete cascade
         constraint programar_id_viaje_check
             check ((id_viaje)::text <> ''::text),
     h_entrada time,
@@ -417,11 +416,13 @@ create table if not exists abordar
     curp     char(18)     not null
         constraint abordar_fkey1
             references cliente
+            on update cascade on delete cascade
         constraint abordar_curp_check
             check (char_length(curp) = 18),
     id_viaje varchar(100) not null
         constraint abordar_fkey2
             references viaje
+            on update cascade on delete cascade
         constraint abordar_id_viaje_check
             check ((id_viaje)::text <> ''::text),
     origen   varchar(100) not null

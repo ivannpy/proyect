@@ -5,7 +5,7 @@ cur_path = os.getcwd()
 
 filepath_raw = os.path.join(cur_path, 'data', 'raw_data')
 filepath_datasets = os.path.join(cur_path, 'data', 'datasets')
-filepath_sql = os.path.join(cur_path, 'sql_files')
+filepath_sql = os.path.join(cur_path, 'sql_files', 'inserts')
 
 # Filepaths de los csv para poblar
 filepath_client = os.path.join(filepath_datasets, 'client.csv')
@@ -67,22 +67,22 @@ states = ("Aguascalientes",
 
 address = 'Cuidad de México'
 
-facu_mail = {'Facultad de Arquitectura': 'arquitectura',
-            'Facultad de Ciencias': 'ciencias',
-            'Facultad de Ciencias Políticas y Sociales': 'polacas',
-            'Facultad de Contaduría y Administración': 'fca',
-            'Facultad de Derecho': 'derecho',
-            'Facultad de Economía': 'economia',
-            'Facultad de Filosofía y Letras': 'filosofia',
-            'Facultad de Ingeniería': 'ingenieria',
-            'Facultad de Medicina': 'medicina',
-            'Facultad de Medicina Veterinaria y Zootecnia': 'mvz',
-            'Facultad de Odontología': 'odontologia',
-            'Facultad de Psicología': 'psicologia',
-            'Facultad de Química': 'quimica',
-            'Escuela Nacional de Trabajo Social': 'ents',
-            'Escuela Nacional de Lenguas, Lingüística y Traducción': 'enallt',
-            'Instituto de Investigaciones en Matemáticas Aplicadas y Sistemas': 'iimas'
+facu_mail = {'Facultad de Arquitectura, CU': 'arquitectura',
+            'Facultad de Ciencias, CU': 'ciencias',
+            'Facultad de Ciencias Políticas y Sociales, CU': 'polacas',
+            'Facultad de Contaduría y Administración, CU': 'fca',
+            'Facultad de Derecho, CU': 'derecho',
+            'Facultad de Economía, CU': 'economia',
+            'Facultad de Filosofía y Letras, CU': 'filosofia',
+            'Facultad de Ingeniería, CU': 'ingenieria',
+            'Facultad de Medicina, CU': 'medicina',
+            'Facultad de Medicina Veterinaria y Zootecnia, CU': 'mvz',
+            'Facultad de Odontología, CU': 'odontologia',
+            'Facultad de Psicología, CU': 'psicologia',
+            'Facultad de Química, CU': 'quimica',
+            'Escuela Nacional de Trabajo Social, CU': 'ents',
+            'Escuela Nacional de Lenguas, Lingüística y Traducción, CU': 'enallt',
+            'Instituto de Investigaciones en Matemáticas Aplicadas y Sistemas, CU': 'iimas'
             }
 
 facu_names = list(facu_mail.keys())
@@ -104,34 +104,34 @@ proba_facu = [1/16,
         1/(16*4),
         1/(16*4)]
 
-uni_mail = {'Tienda UNAM': 'tienda',
-            'TV UNAM': 'tv',
-            'Archivo General': 'archivo',
-            'Unidad de Posgrado': 'posgrado',
-            'Museo Universitario de Arte Contemporáneo': 'muac',
-            'Jardín Botánico IB-UNAM': 'botanico',
-            'Universum': 'dgdc',
-            'Medicina del Deporte': 'deporte',
-            'Rectoría': 'dgp',
-            'Estadio Olímpico': 'deporte',
-            'CEPE': 'cepe',
-            'Alberca': 'deporte',
-            'Torre II de Humanidades': 'torre'
+uni_mail = {'Tienda UNAM, CU': 'tienda',
+            'TV UNAM, CU': 'tv',
+            'Archivo General, CU': 'archivo',
+            'Unidad de Posgrado, CU': 'posgrado',
+            'Museo Universitario de Arte Contemporáneo, CU': 'muac',
+            'Jardín Botánico IB-UNAM, CU': 'botanico',
+            'Universum, CU': 'dgdc',
+            'Medicina del Deporte, CU': 'deporte',
+            'Rectoría, CU': 'dgp',
+            'Estadio Olímpico, CU': 'deporte',
+            'CEPE, CU': 'cepe',
+            'Alberca, CU': 'deporte',
+            'Torre II de Humanidades, CU': 'torre'
             }
 
 uni_names = list(uni_mail.keys())
 
 
-ins_mail = {'Instituto de Ciencias Nucleares': 'nucleares',
-            'Instituto de Ingeniería': 'ii',
-            'Instituto de Investigaciones en Matemáticas Aplicadas y Sistemas': 'iimas',
-            'Instituto de Biolgía': 'biologicas',
-            'Instituto de Química': 'quimica',
-            'Instituto de Ciencias del Mar y Limnología': 'limnologia',
-            'Instituto de Fisiología Celular': 'fisiologia',
-            'Instituto de Geografía': 'geografia',
-            'Instituto de Física': 'fisica',
-            'Instituto de Investigaciones Jurídicas': 'juricas'
+ins_mail = {'Instituto de Ciencias Nucleares, CU': 'nucleares',
+            'Instituto de Ingeniería, CU': 'ii',
+            'Instituto de Investigaciones en Matemáticas Aplicadas y Sistemas, CU': 'iimas',
+            'Instituto de Biolgía, CU': 'biologicas',
+            'Instituto de Química, CU': 'quimica',
+            'Instituto de Ciencias del Mar y Limnología, CU': 'limnologia',
+            'Instituto de Fisiología Celular, CU': 'fisiologia',
+            'Instituto de Geografía, CU': 'geografia',
+            'Instituto de Física, CU': 'fisica',
+            'Instituto de Investigaciones Jurídicas, CU': 'juricas'
             }
 
 ins_names = list(ins_mail.keys())
