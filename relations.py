@@ -1,4 +1,8 @@
-# Cliente
+"""
+Diccionario correspondiente a cliente, 
+donde las llaves son los atributos del cliente
+y las listas son los valores asignados
+"""
 dict_to_df_cliente = {'curp': [],
                       'nombre': [],
                       'a_paterno': [],
@@ -19,8 +23,12 @@ dict_to_df_cliente = {'curp': [],
                       'es_academico': [],
                       'es_trabajador': []
                       }
-
-# Socio
+"""
+Diccionario correspondiente a socio,
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 dict_to_df_socio = {'id_socio': [],
                     'nombre': [],
                     'a_paterno': [],
@@ -42,6 +50,12 @@ dict_to_df_socio = {'id_socio': [],
                     }
 
 # Vehiculo
+"""
+Diccionario correspondiente a vehiculo,
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 dict_to_df_vehiculo = {'num_economico': [],
                        'id_socio': [],
                        'marca': [],
@@ -59,8 +73,12 @@ dict_to_df_vehiculo = {'num_economico': [],
                        'activo': [],
                        'razon': []
                        }
-
-# Viaje
+"""
+Diccionario correspondiente a viaje,
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 dict_to_df_viaje = {'id_viaje': [],
                     'id_socio': [],
                     'num_economico': [],
@@ -69,7 +87,12 @@ dict_to_df_viaje = {'id_viaje': [],
                     'fecha': []
                     }
 
-# Infraccion
+"""
+Diccionario correspondiente a infraccion,
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 dict_to_df_infraccion = {'id_infraccion': [],
                          'id_socio': [],
                          'num_economico': [],
@@ -82,13 +105,24 @@ dict_to_df_infraccion = {'id_infraccion': [],
                          'calle': []
                          }
 
-# Abordar
+"""
+Diccionario correspondiente a abordar,
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 dict_to_df_abordar = {'curp': [],
                       'id_viaje': [],
                       'origen': [],
                       'destino': []
                       }
-
+"""
+Diccionario correspondiente a programar,
+abordar y viaje(travel)
+de forma homologa, los atributos son las 
+llaves correspondientes y los valores 
+corresponden a listas
+"""
 # Programar - Abordar - Travel
 dict_to_df_programar = {'curp': [],
                         'id_viaje': [],
