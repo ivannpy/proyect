@@ -6,8 +6,21 @@ import datetime
 from collections import Counter
 import data_const as c
 
-
+"""
+El siguiente script contiene diversas funciones,
+cuyo objetivo general es la randomización
+ de la información para que está misma sea utilizada
+"""
 def get_names(data_m, data_f, data_s, n_data, seed=1):
+    """
+    PARAM
+    -----
+    data_m : dataset
+    data_f : dataset
+    data_s : dataset
+    n_data : int 
+    seed = 1:kwargs :int
+    """
     np.random.seed(seed)
     n_masc = int(np.random.normal(loc=(n_data)/2, scale=1))
     n_fem = n_data - n_masc
@@ -45,6 +58,16 @@ def get_names(data_m, data_f, data_s, n_data, seed=1):
 
 
 def get_curp(name, sur1, sur2, sex, socio=False):
+    """
+    Genera una curp según los parámetro presentados
+    PARAM
+    -----
+    name: str
+    sur1: str
+    sur2: str
+    sex : str
+    socio=False : boolean (*kwargs)
+    """
     np.random.seed()
 
     if len(sur1[0:2].rstrip()) == 2:
@@ -80,6 +103,15 @@ def get_curp(name, sur1, sur2, sex, socio=False):
 
 
 def get_curps(names, surnames1, surnames2, sex, socio=False):
+    """
+    Genera una lista de curps
+    -----
+    name: str
+    sur1: str
+    sur2: str
+    sex : str
+    socio=False : boolean (*kwargs)
+    """
     curps: list = []
 
     for name, surname1, surname2, in zip(names, surnames1, surnames2):
@@ -90,6 +122,10 @@ def get_curps(names, surnames1, surnames2, sex, socio=False):
 
 
 def get_tels(n_size):
+    """
+    Genera teléfonos al azar, y estos son agregados a una lista,
+    la cual los guarda y regresa
+    """
     nums: list = []
 
     for i in range(0, n_size):
@@ -105,6 +141,9 @@ def get_tels(n_size):
 
 
 def get_photos(curps):
+    """
+    Genera rutas de fotos relativas y aleatorias
+    """
     rel_path: str = 'proyecto/data/photos/'
     paths_photos: list = []
 
@@ -123,6 +162,13 @@ def get_photos(curps):
 
 
 def get_unity(curps):
+    """
+    Se decide que clase de de cliente es ,académico
+    socio o estudiante
+    PARAM
+    -----
+    curps : curp's list
+    """
     is_student: list = []
     is_academic: list = []
     is_worker: list = []
@@ -169,6 +215,16 @@ def get_unity(curps):
 
 
 def get_fac_ins_uni(es_alu, es_aca, es_tra):
+    """
+    Esta función decide si el cliente pertenece a 
+    algún instituto, facultad o unidad, o simplemente 
+    a ninguna de ellas.
+    PARAM
+    -----
+    es_alu:bool
+    es_aca:bool
+    es_tra:bool
+    """
     faculty: list = []
     institute: list = []
     unit: list = []
@@ -211,6 +267,16 @@ def get_fac_ins_uni(es_alu, es_aca, es_tra):
 
 
 def get_mails(names, sur_1, sur_2, curps, facs, insts, units):
+    """
+    Generador de emails
+    names: str
+    sur_1: str
+    sur_2: str
+    curps: list
+    fact: list
+    insts: list
+    units: list
+    """
     emails: list = []
 
     for name, sur1, sur2, curp, fac, inst, unit in zip(names, sur_1, sur_2, curps, facs, insts, units):
@@ -239,6 +305,12 @@ def get_mails(names, sur_1, sur_2, curps, facs, insts, units):
     return emails
 
 def get_simple_mail(names):
+    """
+    Función para obtener un e-mail normal
+    PARAM
+    -----
+    names:str
+    """
     emails: list = []
 
     for name in names:
@@ -255,6 +327,12 @@ def get_simple_mail(names):
 
 
 def get_rfc(curps):
+    """
+    De acuerdo a la lista de curps se generan rfc's
+    PARAM
+    -----
+    curps:list
+    """
     rfcs: list = []
 
     for curp in curps:
@@ -267,6 +345,11 @@ def get_rfc(curps):
 
 
 def get_date(lower=2000, upper=2022):
+    """
+    Generador de fechas pseudo-aleatorias
+    lower =2000 :int (*kwargs)
+    upper = 2022 :int (*kwargs)
+    """
     yy = np.random.randint(lower, upper)
     mm = np.random.randint(1, 13)
     dd = np.random.randint(1, 32)
@@ -288,11 +371,18 @@ def get_date(lower=2000, upper=2022):
 
 
 def compare_date(date1, date2):
-
+    """
+    Comparador de fechas
+    date1 : date
+    date2 : date
+    """
     return date1 >= date2
 
 
 def get_time():
+    """
+    Emulador de  timer
+    """
     hh = np.random.randint(6, 23, size=1)[0]
     mm = np.random.randint(0, 59, size=1)[0]
     ss = np.random.randint(0, 59, size=1)[0]
@@ -302,6 +392,11 @@ def get_time():
 
 
 def get_in_out(n_socio):
+    """
+    n_socio:str
+    Aleatoriamente hace a los socios activos o no, y 
+    en caso de que sean no-activos les asigna fechas de ingreso  y egreso
+    """
     ingreso: list = []
     egreso: list = []
 
@@ -323,6 +418,12 @@ def get_in_out(n_socio):
 
 
 def get_due_cho(n_data):
+    """
+    Genera dueños y vehículos para choferes
+    PARAM
+    -----
+    n_data:int
+    """
     duenios: list = []
 
     choferes = np.random.choice([0,1], size=n_data, p=[0.2, 0.8])
@@ -338,6 +439,12 @@ def get_due_cho(n_data):
 
 
 def get_lic(choferes):
+    """
+    Genera no. de licencia de choferes
+    PARAM
+    -----
+    choferes : list
+    """
     licencias = []
 
     for ch in choferes:
@@ -352,6 +459,12 @@ def get_lic(choferes):
     return licencias
 
 def get_duenios(owners, n_veh):
+    """
+    PARAM
+    -----
+    owners : list
+    n_veh : int
+    """
     duenios = []
     poss_owners = list(owners.copy())
 
@@ -366,6 +479,11 @@ def get_duenios(owners, n_veh):
     return duenios
 
 def get_vehicle_info(n_vehicle):
+    """
+    Genera la información de vehículo
+    PARAM:
+    n_vehicle : int
+    """
     marcas = list(c.data_vehicle['vehicles'].keys())
     tipos = c.data_vehicle['tipo']
     num_c = c.data_vehicle['num_cilindros']
@@ -406,6 +524,12 @@ def get_vehicle_info(n_vehicle):
 
 
 def get_aseg_info(n_vehicle):
+    """
+    Genera aseguradoras para vehículos
+    PARAM
+    -----
+    n_vehicle:int
+    """
     vigencias = []
 
     aseg = c.aseguradoras_info['aseguradoras']
@@ -423,6 +547,11 @@ def get_aseg_info(n_vehicle):
 
 
 def get_raz(n_vehicle):
+    """
+    PARAM
+    -----
+    n_vehicle : int
+    """
     activos = np.random.choice([True, False], size=n_vehicle, p=[0.9,0.1])
     razones = []
 
@@ -436,6 +565,11 @@ def get_raz(n_vehicle):
     return activos, razones
 
 def get_dist_time(n_travel):
+    """
+    PARAM
+    -----
+    n_travel:list
+    """
     distances = []
     times = []
 
@@ -456,6 +590,12 @@ def get_dist_time(n_travel):
 
 
 def get_infrac(travels, n_infrac):
+    """
+    PARAM
+    -----
+    travels :list
+    n_infrac : list
+    """
     ids_socios = []
     num_ecos = []
     fechas = []
@@ -479,6 +619,9 @@ def get_infrac(travels, n_infrac):
 
 
 def get_infrac_place(n_data):
+    """
+    n_data :dataset
+    """
     places_ = {'cp': [66455],
     'alcaldia': ['Coyoacán'],
     'calle': ['Circuito escolar']}
@@ -516,6 +659,12 @@ def get_infrac_place(n_data):
 
 
 def get_abordaje(curps, ids_viajes):
+    """
+    PARAM
+    -----
+    curps:list
+    ids_viajes: list
+    """
     viajes_list = []
     curps_list = []
 
@@ -542,6 +691,14 @@ def get_abordaje(curps, ids_viajes):
 
 
 def get_origen_destino(abordar, cliente):
+    """
+    Obtiene el origen y el destino de clientes que han programado
+    su viaje
+    PARAM
+    -----
+    abordar: map
+    cliente: map
+    """
     origenes = []
     destinos = []
 
@@ -581,6 +738,9 @@ def get_origen_destino(abordar, cliente):
 
 
 def add_redondos(board, travel, client, partner, vehicle):
+    """
+    Agrega viajes redondos programados
+    """
     # Par Programar
     curps_programar = []
     ids_viajes_programar = []
