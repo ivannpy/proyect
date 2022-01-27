@@ -2,8 +2,20 @@ import pandas as pd
 import data_const as c
 import os
 
-
+"""
+A través de este script se modelan los procesos de 
+transcripción de datasets bien formados
+a inserts sql, escritos en archivos.sql
+"""
 def main(dataset, table_name):
+    """
+    PARAMETERS
+    ----------
+    dataset : str
+            Ruta del dataset
+    table_name :str
+            La tabla donde son requeridos los inserts
+    """
     filename = os.path.join(c.filepath_sql, f'{table_name}.sql')
     file = open(filename, 'w')
     data = pd.read_csv(dataset)
