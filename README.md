@@ -2,6 +2,7 @@
 
 Proyecto final de Fundamentos de Bases de Datos
 Semestre 2022-1
+Facultad de Ciencias
 
 
 Los datos de las calles, colonias, alcaldías, etc., fueron obtenidos de [SIGCDMX](https://sig.cdmx.gob.mx/datos/)
